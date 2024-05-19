@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Setting2.cs" />
+    <Compile Include="Bonuse.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Equipment.cs" />
+    <Compile Include="Gym.cs" />
+    <Compile Include="Purchase.cs" />
+    <Compile Include="Schedule.cs" />
+    <Compile Include="Sport.cs" />
+    <Compile Include="Sub.cs" />
+    <Compile Include="Trainer.cs" />
+    <Compile Include="Visit.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+</Project>

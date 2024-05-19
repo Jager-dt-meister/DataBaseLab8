@@ -1,0 +1,45 @@
+﻿@model VisitModel
+
+@{
+	var exists = Model != null && Model.VisitId != 0;
+	ViewBag.Title = (exists ? "Редактирование" : "Создание") + " Visit";
+}
+
+<form asp-action="Update" asp-antiforgery="true" method="post">
+	<div class="row">
+		<div class="col-md-4 col-sm-6">
+			<div class="form-group">
+				<label asp-for="VisitId"></label>
+				<input type="text" asp-for="VisitId" class="form-control"/>
+				<span asp-validation-for="VisitId" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="form-group">
+				<label asp-for="ScheduleId"></label>
+				<input type="text" asp-for="ScheduleId" class="form-control"/>
+				<span asp-validation-for="ScheduleId" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="form-group">
+				<label asp-for="PurchaseId"></label>
+				<input type="text" asp-for="PurchaseId" class="form-control"/>
+				<span asp-validation-for="PurchaseId" class="text-danger"></span>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-6">
+			<div class="form-group">
+				<label asp-for="Realdate"></label>
+				<input type="text" asp-for="Realdate" class="form-control dateTimePicker"/>
+				<span asp-validation-for="Realdate" class="text-danger"></span>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<button class="btn btn-outline-primary" type="submit">@(exists ? "Сохранить" : "Добавить")</button>
+			<a asp-action="Index" class="btn btn-outline-secondary">Отмена</a>
+		</div>
+	</div>
+</form>

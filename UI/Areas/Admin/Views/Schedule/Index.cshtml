@@ -31,7 +31,12 @@
 			<table class="table table-striped">
 				<tr>
 					<th class="text-center">ID</th>
-					<th class="text-center">Действия</th>
+                    <th class="text-center">ID спортзала</th>
+                    <th class="text-center">продолжительность</th>
+                    <th class="text-center">дата</th>
+                    <th class="text-center">ID тренера</th>
+                    <th class="text-center">ID спорта</th>
+                    <th class="text-center">Действия</th>
 				</tr>
 				@foreach (var item in Model.Objects)
 				{
@@ -39,7 +44,22 @@
 						<td class="text-center">
 							@item.ScheduleId
 						</td>
-						<td class="text-center">
+                        <td class="text-center">
+                            @item.GymId
+                        </td>
+                        <td class="text-center">
+                            @item.Duration
+                        </td>
+                        <td class="text-center">
+                            @item.Date
+                        </td>
+                        <td class="text-center">
+                            @item.TrId
+                        </td>
+                        <td class="text-center">
+                            @item.SportId
+                        </td>
+                        <td class="text-center">
 							<a asp-action="Update" asp-route-id="@item.ScheduleId">Изменить</a><br/>
 							<a asp-action="Delete" asp-route-id="@item.ScheduleId" class="delete-object-button">Удалить</a>
 						</td>

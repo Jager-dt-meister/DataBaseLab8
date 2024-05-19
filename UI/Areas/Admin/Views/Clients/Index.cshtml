@@ -31,15 +31,27 @@
 			<table class="table table-striped">
 				<tr>
 					<th class="text-center">ID</th>
-					<th class="text-center">Действия</th>
+                    <th class="text-center">ФИО</th>
+                    <th class="text-center">дата рождения</th>
+                    <th class="text-center">дата регистрации</th>
+                    <th class="text-center">Действия</th>
 				</tr>
 				@foreach (var item in Model.Objects)
 				{
 					<tr>
-						<td class="text-center">
-							@item.ClientId
+                        <td class="text-center">
+                            @item.ClientId
+                        </td>
+                        <td class="text-center">
+							@item.Name
 						</td>
-						<td class="text-center">
+                        <td class="text-center">
+                            @item.Birth
+                        </td>
+                        <td class="text-center">
+                            @item.RegDate
+                        </td>
+                        <td class="text-center">
 							<a asp-action="Update" asp-route-id="@item.ClientId">Изменить</a><br/>
 							<a asp-action="Delete" asp-route-id="@item.ClientId" class="delete-object-button">Удалить</a>
 						</td>

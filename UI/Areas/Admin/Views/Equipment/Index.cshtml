@@ -1,10 +1,10 @@
-﻿@model SearchResultViewModel<EquipmentModel>
+﻿@model GymsViewModel
 
 @{
 	ViewBag.Title = "Equipment";
-	var pagedList = Html.PagedList(Model.PagesInfo.ItemsCount, Model.PagesInfo.ItemsPerPage, Model.PagesInfo.CurrentPage,
-		Model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
-		{
+	var pagedList = Html.PagedList(Model.eq_model.PagesInfo.ItemsCount, Model.eq_model.PagesInfo.ItemsPerPage, Model.eq_model.PagesInfo.CurrentPage,
+        Model.eq_model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
+        {
 			page = pageNumber
 		}), new PagedListExtensions.PagedListRenderParams());
 }
@@ -33,11 +33,17 @@
 					<th class="text-center">ID</th>
                     <th class="text-center">название</th>
                     <th class="text-center">ID спортзала</th>
-                    <th class="text-center">Действия</th>
+                     @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <th class="text-center">Действия</th>
+                        }
 				</tr>
-				@foreach (var item in Model.Objects)
-				{
-					<tr>
+                @foreach (var item in Model.eq_model.Objects)
+                {
+                    //
+                    var gym_sportId = Model.gym_model.Objects.Where(gym_sportId => gym_sportId.GymId == item.GymId).ToList();
+                    //
+                    <tr>
 						<td class="text-center">
 							@item.EqId
 						</td>
@@ -45,13 +51,16 @@
                             @item.Name
                         </td>
                         <td class="text-center">
-                            @item.GymId
+                            @Html.Raw(string.Join(" ", gym_sportId.Select(s => string.Format(" {0}", s.SportId))))
                         </td>
-                        <td class="text-center">
-							<a asp-action="Update" asp-route-id="@item.EqId">Изменить</a><br/>
-							<a asp-action="Delete" asp-route-id="@item.EqId" class="delete-object-button">Удалить</a>
-						</td>
-					</tr>
+                        @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@item.EqId">Изменить</a><br/>
+                                <a asp-action="Delete" asp-route-id="@item.EqId" class="delete-object-button">Удалить</a>
+                            </td>
+                        }
+                    </tr>
 				}
 			</table>
 		</div>

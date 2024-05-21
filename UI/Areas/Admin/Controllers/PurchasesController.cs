@@ -20,13 +20,25 @@ namespace UI.Areas.Admin.Controllers
 		public async Task<IActionResult> Index(int page = 1)
 		{
 			const int objectsPerPage = 20;
-			var searchResult = await new PurchasesBL().GetAsync(new PurchasesSearchParams
+			var searchResultPurchases = await new PurchasesBL().GetAsync(new PurchasesSearchParams
 			{
 				StartIndex = (page - 1) * objectsPerPage,
 				ObjectsCount = objectsPerPage,
 			});
-			var viewModel = new SearchResultViewModel<PurchaseModel>(PurchaseModel.FromEntitiesList(searchResult.Objects), 
-				searchResult.Total, searchResult.RequestedStartIndex, searchResult.RequestedObjectsCount, 5);
+			var viewModelPurchases = new SearchResultViewModel<PurchaseModel>(PurchaseModel.FromEntitiesList(searchResultPurchases.Objects),
+				searchResultPurchases.Total, searchResultPurchases.RequestedStartIndex, searchResultPurchases.RequestedObjectsCount, 5);
+			var searchResultClient = await new ClientsBL().GetAsync(new ClientsSearchParams
+			{
+				StartIndex = (page - 1) * objectsPerPage,
+				ObjectsCount = objectsPerPage,
+			});
+			var viewModelClient = new SearchResultViewModel<ClientModel>(ClientModel.FromEntitiesList(searchResultClient.Objects),
+				searchResultClient.Total, searchResultClient.RequestedStartIndex, searchResultClient.RequestedObjectsCount, 5);
+			var viewModel = new ClientViewModel
+			{
+				client_model = viewModelClient,
+				purchase_model = viewModelPurchases,
+			};
 			return View(viewModel);
 		}
 

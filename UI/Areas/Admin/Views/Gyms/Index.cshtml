@@ -32,7 +32,10 @@
 				<tr>
 					<th class="text-center">ID</th>
                     <th class="text-center">ID спорта</th>
-                    <th class="text-center">Действия</th>
+                     @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <th class="text-center">Действия</th>
+                        }
 				</tr>
 				@foreach (var item in Model.Objects)
 				{
@@ -43,11 +46,14 @@
                         <td class="text-center">
                             @item.SportId
                         </td>
-                        <td class="text-center">
-							<a asp-action="Update" asp-route-id="@item.GymId">Изменить</a><br/>
-							<a asp-action="Delete" asp-route-id="@item.GymId" class="delete-object-button">Удалить</a>
-						</td>
-					</tr>
+                        @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@item.GymId">Изменить</a><br/>
+                                <a asp-action="Delete" asp-route-id="@item.GymId" class="delete-object-button">Удалить</a>
+                            </td>
+                        }
+                    </tr>
 				}
 			</table>
 		</div>

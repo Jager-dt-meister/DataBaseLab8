@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Тренеры и их занятость";
+}
+@model List<UI.Areas.Public.Models.CountSchViewModel>
+<h1>Абонементы с такой ценой</h1>
+<table>
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>CountSch</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.CountSch<br /></td>
+            </tr>
+        }
+    </tbody>
+</table>

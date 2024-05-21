@@ -22,8 +22,13 @@
     <Compile Include="Areas\Admin\Models\FileManager\FileModel.cs" />
     <Compile Include="Areas\Admin\Models\FileManager\RenameError.cs" />
     <Compile Include="Areas\Admin\Models\FileManager\UploadError.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\ClientViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\ViewModels\GymsViewModel.cs" />
     <Compile Include="Areas\Public\Controllers\ErrorController.cs" />
     <Compile Include="Areas\Public\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Public\Models\CountEqViewModel.cs" />
+    <Compile Include="Areas\Public\Models\CountSchViewModel.cs" />
+    <Compile Include="Areas\Public\Models\SubInfoViewModel.cs" />
     <Compile Include="Extensions\Mvc\AddressesHelper.cs" />
     <Compile Include="Extensions\Mvc\PagedListExtensions.cs" />
     <Compile Include="Extensions\Mvc\SelectListExtensions.cs" />

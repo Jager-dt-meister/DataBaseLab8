@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Абонементы с такой ценой";
+}
+@model List<UI.Areas.Public.Models.SubInfoViewModel>
+<h1>Абонементы с такой ценой</h1>
+<table>
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.duration<br /></td>
+            </tr>
+        }
+    </tbody>
+</table>

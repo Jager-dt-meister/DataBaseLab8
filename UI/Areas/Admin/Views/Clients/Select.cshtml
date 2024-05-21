@@ -1,0 +1,60 @@
+﻿@model ClientViewModel
+
+@{
+    var exists = ViewBag.Client != null && ViewBag.Client.ClientId != 0;
+    ViewBag.Title = "Выбранный" + " клиент";
+}
+
+<div class="row">
+    <div class="col-md-1 col-sm-1">
+        <label>Id клиента</label>
+        <p>@ViewBag.Client.ClientId</p>
+    </div>
+    <div class="col-md-2 col-sm-2">
+        <label>Имя</label>
+        <p>@ViewBag.Client.Name</p>
+    </div>
+    <div class="col-md-2 col-sm-2">
+        <label>дата рождения</label>
+        <p>@ViewBag.Client.Birth</p>
+    </div>
+</div>
+<h2 class="text-center">Покупки</h2>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th class="text-center">Id покупки</th>
+                    <th class="text-center">дата покупки</th>
+                    @if (User.IsInRole(nameof(UserRole.Developer)))
+                    {
+                        <th class="text-center">Действия</th>
+                    }
+                </tr>
+
+                @{
+                    var purch = Model.purchase_model.Objects.Where(x => x.ClientId == ViewBag.Client.ClientId).ToList();
+                    foreach (var i in purch)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @i.PurchaseId
+                            </td>
+                            <td class="text-center">
+                                @i.Date
+                            </td>
+                            @if (User.IsInRole(nameof(UserRole.Developer)))
+                            {
+                                <td class="text-center">
+                                    <a asp-controller="Purchases" asp-action="Update" asp-route-id="@i.PurchaseId">Изменить</a><br />
+                                    <a asp-controller="Purchases" asp-action="Delete" asp-route-id="@i.PurchaseId" class="delete-object-button">Удалить</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

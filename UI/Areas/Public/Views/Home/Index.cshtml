@@ -1,5 +1,37 @@
 ﻿@{
     ViewData["Title"] = "Main page";
 }
+<a class="btn btn-primary @(Url.GetController() == "Clients" ? "active" : "")" asp-area="Admin" asp-controller="Clients" asp-action="Index">
+    Админская панель
+</a>
 
 <h1>Main page</h1>
+
+<div class="form-section">
+    <h2>Процедуры:</h2>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="ClientPurchase" method="post">
+        <label for="status">Имя:</label>
+        <input type="text" id="status" name="status" required />
+        <button type="submit">Покупки клиента</button>
+    </form>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="SubInfoMethod" method="post">
+        <label for="salary">Цена:</label>
+        <input type="number" id="price" name="price" required />
+        <button type="submit">Абонементы</button>
+    </form>
+
+    <h2>Представления:</h2>
+    <form asp-area="Public" asp-controller="Home" asp-action="CountSch" method="post">
+        <label for="counts">Тренеры и их занятость</label>
+
+        <button type="submit">Показать</button>
+    </form>
+
+    <form asp-area="Public" asp-controller="Home" asp-action="CountEq" method="post">
+        <label for="counts">Количество снаряжения</label>
+
+        <button type="submit">Показать</button>
+    </form>
+</div>

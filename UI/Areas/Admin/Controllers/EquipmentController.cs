@@ -20,13 +20,25 @@ namespace UI.Areas.Admin.Controllers
 		public async Task<IActionResult> Index(int page = 1)
 		{
 			const int objectsPerPage = 20;
-			var searchResult = await new EquipmentBL().GetAsync(new EquipmentSearchParams
+			var searchResultEq = await new EquipmentBL().GetAsync(new EquipmentSearchParams
 			{
 				StartIndex = (page - 1) * objectsPerPage,
 				ObjectsCount = objectsPerPage,
 			});
-			var viewModel = new SearchResultViewModel<EquipmentModel>(EquipmentModel.FromEntitiesList(searchResult.Objects), 
-				searchResult.Total, searchResult.RequestedStartIndex, searchResult.RequestedObjectsCount, 5);
+			var viewModelEq = new SearchResultViewModel<EquipmentModel>(EquipmentModel.FromEntitiesList(searchResultEq.Objects), 
+				searchResultEq.Total, searchResultEq.RequestedStartIndex, searchResultEq.RequestedObjectsCount, 5);
+			var searchResultGyms = await new GymsBL().GetAsync(new GymsSearchParams
+			{
+				StartIndex = (page - 1) * objectsPerPage,
+				ObjectsCount = objectsPerPage,
+			});
+			var viewModelGyms = new SearchResultViewModel<GymModel>(GymModel.FromEntitiesList(searchResultGyms.Objects),
+				searchResultGyms.Total, searchResultGyms.RequestedStartIndex, searchResultGyms.RequestedObjectsCount, 5);
+			var viewModel = new GymsViewModel
+			{
+				gym_model = viewModelGyms,
+				eq_model=viewModelEq
+			};
 			return View(viewModel);
 		}
 

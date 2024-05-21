@@ -48,7 +48,10 @@
 				<tr>
 					<th class="text-center">Логин</th>
 					<th class="text-center">Роль</th>
-					<th class="text-center">Действия</th>
+                     @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+					        <th class="text-center">Действия</th>
+                        }
 				</tr>
 				@foreach (var item in Model.Objects)
 				{
@@ -59,10 +62,13 @@
 						<td class="text-center">
 							@item.Role.GetDisplayName()
 						</td>
-						<td class="text-center">
-							<a asp-action="Update" asp-route-id="@item.Id">Изменить</a>
-						</td>
-					</tr>
+                        @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@item.Id">Изменить</a>
+                            </td>
+                        }
+                    </tr>
 				}
 			</table>
 		</div>

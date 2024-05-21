@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Количество снаряжения";
+}
+@model List<UI.Areas.Public.Models.CountEqViewModel>
+<h1>Количество снаряжения</h1>
+<table>
+    <thead>
+        <tr>
+            <th>name</th>
+            <th>CountEq</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.name</td>
+                <td>@item.CountEq<br /></td>
+            </tr>
+        }
+    </tbody>
+</table>

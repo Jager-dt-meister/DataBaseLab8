@@ -1,10 +1,10 @@
-﻿@model SearchResultViewModel<PurchaseModel>
+﻿@model ClientViewModel
 
 @{
 	ViewBag.Title = "Purchases";
-	var pagedList = Html.PagedList(Model.PagesInfo.ItemsCount, Model.PagesInfo.ItemsPerPage, Model.PagesInfo.CurrentPage,
-		Model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
-		{
+    var pagedList = Html.PagedList(Model.purchase_model.PagesInfo.ItemsCount, Model.purchase_model.PagesInfo.ItemsPerPage, Model.purchase_model.PagesInfo.CurrentPage,
+        Model.purchase_model.PagesInfo.DisplayedPages, pageNumber => Url.Action(Url.GetAction(), new
+        {
 			page = pageNumber
 		}), new PagedListExtensions.PagedListRenderParams());
 }
@@ -32,14 +32,18 @@
 				<tr>
 					<th class="text-center">ID</th>
                     <th class="text-center">Дата Регистрации</th>
-                    <th class="text-center">ID клиента</th>
+                    <th class="text-center">клиент</th>
                     <th class="text-center">ID бонуса</th>
                     <th class="text-center">ID абонемента</th>
-                    <th class="text-center">Действия</th>
+                     @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <th class="text-center">Действия</th>
+                        }
 				</tr>
-				@foreach (var item in Model.Objects)
+				@foreach (var item in Model.purchase_model.Objects)
 				{
-					<tr>
+                    var client_name = Model.client_model.Objects.Where(client => client.ClientId == item.ClientId).ToList();
+                    <tr>
 						<td class="text-center">
 							@item.PurchaseId
 						</td>
@@ -47,7 +51,7 @@
                             @item.Date
                         </td>
                         <td class="text-center">
-                            @item.ClientId
+                            @Html.Raw(string.Join(" ", client_name.Select(s => string.Format(" {0}", s.Name))))
                         </td>
                         <td class="text-center">
                             @item.BonusId
@@ -55,11 +59,14 @@
                         <td class="text-center">
                             @item.SubId
                         </td>
-                        <td class="text-center">
-							<a asp-action="Update" asp-route-id="@item.PurchaseId">Изменить</a><br/>
-							<a asp-action="Delete" asp-route-id="@item.PurchaseId" class="delete-object-button">Удалить</a>
-						</td>
-					</tr>
+                        @if (User.IsInRole(nameof(UserRole.Developer)))
+                        {
+                            <td class="text-center">
+                                <a asp-action="Update" asp-route-id="@item.PurchaseId">Изменить</a><br/>
+                                <a asp-action="Delete" asp-route-id="@item.PurchaseId" class="delete-object-button">Удалить</a>
+                            </td>
+                        }
+                    </tr>
 				}
 			</table>
 		</div>

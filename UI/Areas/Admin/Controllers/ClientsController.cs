@@ -42,6 +42,41 @@ namespace UI.Areas.Admin.Controllers
 			return View(model);
 		}
 
+
+		public async Task<IActionResult> Select(int? id)
+		{
+			var model = new ClientModel();
+			if (id != null)
+			{
+				model = ClientModel.FromEntity(await new ClientsBL().GetAsync(id.Value));
+				if (model == null)
+					return NotFound();
+			}
+			const int objectsPerPage = 20;
+			var PurchsearchResult = await new PurchasesBL().GetAsync(new PurchasesSearchParams
+			{
+				StartIndex = 0,
+				ObjectsCount = objectsPerPage,
+			});
+			var PurchviewModel = new SearchResultViewModel<PurchaseModel>(PurchaseModel.FromEntitiesList(PurchsearchResult.Objects),
+				PurchsearchResult.Total, PurchsearchResult.RequestedStartIndex, PurchsearchResult.RequestedObjectsCount, 5);
+
+			var ClientPurchsearchResult = await new ClientsBL().GetAsync(new ClientsSearchParams
+			{
+				StartIndex = 0,
+				ObjectsCount = objectsPerPage,
+			});
+			var ClientPurchviewModel = new SearchResultViewModel<ClientModel>(ClientModel.FromEntitiesList(ClientPurchsearchResult.Objects),
+				ClientPurchsearchResult.Total, ClientPurchsearchResult.RequestedStartIndex, ClientPurchsearchResult.RequestedObjectsCount, 5);
+			var viewModel = new ClientViewModel
+			{
+				purchase_model = PurchviewModel,
+				client_model = ClientPurchviewModel
+			};
+			ViewBag.Client = model;
+			return View(viewModel);
+		}
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Update(ClientModel model)
